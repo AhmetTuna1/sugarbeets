@@ -22,28 +22,35 @@ warnings.filterwarnings("ignore")
 # =========================================================
 # 1) AYARLAR
 # =========================================================
+try:
+    import google.colab
+    IN_COLAB = True
+except ImportError:
+    IN_COLAB = False
 
-# Proje kök dizini (WORKSET)
-WORKSET_DIR = r"C:\Users\90534\OneDrive\Masaüstü\Sugarbeets\annotations_cropweed_parts\WORKSET"
-
-# ZIP dosyanın yolu
-ZIP_PATH = os.path.join(WORKSET_DIR, "DATASET_SPLIT_zip.zip")
-# ZIP açıldıktan sonra dosyaların çıkarılacağı yer
-EXTRACT_DIR = WORKSET_DIR
-
-# Dataset kök dizini
-BASE_PATH = os.path.join(EXTRACT_DIR, "DATASET_SPLIT")
+if IN_COLAB:
+    # Colab Yolları
+    WORKSET_DIR = "/content/sugarbeets/annotations_cropweed_parts/WORKSET"
+    ZIP_PATH = "/content/drive/MyDrive/driveSugarBeets.zip"
+    EXTRACT_DIR = "/content/DATASET_SPLIT"
+    BASE_PATH = "/content/DATASET_SPLIT/DATASET_SPLIT" # Zip içi yapıya göre
+    MODEL_SAVE_PATH = "/content/drive/MyDrive/best_unet_sugarbeets.pth"
+    NUM_WORKERS = 2
+else:
+    # Yerel Yollar (Windows)
+    WORKSET_DIR = r"C:\Users\90534\OneDrive\Masaüstü\Sugarbeets\annotations_cropweed_parts\WORKSET"
+    ZIP_PATH = os.path.join(WORKSET_DIR, "DATASET_SPLIT_zip.zip")
+    EXTRACT_DIR = WORKSET_DIR
+    BASE_PATH = os.path.join(EXTRACT_DIR, "DATASET_SPLIT")
+    MODEL_SAVE_PATH = os.path.join(WORKSET_DIR, "best_unet_sugarbeets.pth")
+    NUM_WORKERS = 0
 
 # Eğitim ayarları
 IMG_SIZE = 256
 BATCH_SIZE = 16
-NUM_WORKERS = 0
 NUM_EPOCHS = 15
 LEARNING_RATE = 1e-3
 SEED = 42
-
-# Model kayıt yolu
-MODEL_SAVE_PATH = os.path.join(WORKSET_DIR, "best_unet_sugarbeets.pth")
 
 # Mask uzantısı varsayımı
 MASK_EXTENSION = ".png"
