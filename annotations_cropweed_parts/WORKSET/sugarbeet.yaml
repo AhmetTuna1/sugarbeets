@@ -1,0 +1,7 @@
+path: C:\Users\90534\OneDrive\Masaüstü\Sugarbeets\annotations_cropweed_parts\WORKSET\DATASET_SPLIT
+train: train/images
+val: val/images
+
+# Classes
+names:
+  0: object
