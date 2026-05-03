@@ -37,12 +37,12 @@ def visualize_yolo_results(run_dir):
     cols = 2
     rows = (num_images + 1) // cols
 
-    plt.figure(figsize=(15, 6 * rows))
+    plt.figure(figsize=(15, 6 * rows), facecolor="white")
     for i, (img_path, title) in enumerate(found_images):
         plt.subplot(rows, cols, i + 1)
         img = Image.open(img_path)
         plt.imshow(img)
-        plt.title(title, fontsize=14, fontweight="bold")
+        plt.title(title, fontsize=14, fontweight="bold", color="black")
         plt.axis("off")
 
     plt.tight_layout()
