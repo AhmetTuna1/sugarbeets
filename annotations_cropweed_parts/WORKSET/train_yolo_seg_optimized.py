@@ -13,7 +13,8 @@ def main():
         IN_COLAB = False
 
     if IN_COLAB:
-        yaml_path = "/content/sugarbeet.yaml"  # Veya Drive yolu
+        # Colab'da git pull yaptıktan sonra sugarbeets ana klasöründe çalışıldığı için yol:
+        yaml_path = "annotations_cropweed_parts/WORKSET/sugarbeet.yaml"
         device = 0
         workers = 8  # Colab için
     else:
@@ -31,7 +32,7 @@ def main():
         imgsz=640,              # Makale odaklı: Yüksek çözünürlük
         batch=64,               # A100 40GB RAM için çok uygun (Bozulursa 32'ye düşürülebilir)
         device=device,
-        project="runs",         # Colab sonrasında bunu drive'a taşıyorsanız "/content/drive/MyDrive/.../yolo_results" yapabilirsiniz
+        project="/content/drive/MyDrive/SugarBeetsProject/yolo_results" if IN_COLAB else "runs", # Colab'da sonuçlar kaybolmasın diye Drive'a kaydeder
         name="sugarbeet_seg_opt_m", # Yeni model kayıt adı
         workers=workers,
         
