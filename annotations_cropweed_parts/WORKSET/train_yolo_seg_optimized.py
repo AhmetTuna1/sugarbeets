@@ -13,8 +13,8 @@ def main():
         IN_COLAB = False
 
     if IN_COLAB:
-        # Colab'da git pull yaptıktan sonra sugarbeets ana klasöründe çalışıldığı için yol:
-        yaml_path = "annotations_cropweed_parts/WORKSET/sugarbeet.yaml"
+        # Colab'da veriyi zip'ten çıkardığın için kendi oluşturduğumuz YAML dosyasını kullanıyoruz
+        yaml_path = "/content/sugarbeet.yaml"
         device = 0
         workers = 8  # Colab için
     else:
