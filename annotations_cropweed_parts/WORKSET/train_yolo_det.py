@@ -174,30 +174,37 @@ def train_detection():
     # --- ADIM 3: Eğitim ---
     print(f"\n[ADIM 3/3] YOLOv8s Detection eğitimi başlatılıyor...\n")
     
-    # YOLOv8s Detection modeli (segmentation DEĞİL!)
-    model = YOLO("yolov8s.pt")
+    # YOLOv8s Detection modeli (Sıfırdan veya Kaldığı Yerden)
+    last_pt_path = os.path.join(RESULTS_DIR, "sugarbeet_det_s", "weights", "last.pt")
     
-    results = model.train(
-        data=yaml_path,
-        epochs=100,
-        patience=20,
-        imgsz=640,
-        batch=BATCH,
-        cache=True,
-        device=DEVICE,
-        project=RESULTS_DIR,
-        name="sugarbeet_det_s",
-        workers=WORKERS,
-        
-        # Tarımsal veri çoğaltma (segmentation ile aynı ayarlar)
-        degrees=180.0,
-        flipud=0.5,
-        fliplr=0.5,
-        hsv_h=0.015,
-        hsv_s=0.7,
-        hsv_v=0.4,
-        cos_lr=True,
-    )
+    if os.path.exists(last_pt_path):
+        print(f"\n[BİLGİ] Önceki eğitim bulundu! Kaldığı epochtan devam ediliyor (RESUME)...\n")
+        model = YOLO(last_pt_path)
+        results = model.train(resume=True)
+    else:
+        print(f"\n[BİLGİ] Sıfırdan yeni bir eğitim başlatılıyor...\n")
+        model = YOLO("yolov8s.pt")
+        results = model.train(
+            data=yaml_path,
+            epochs=100,
+            patience=20,
+            imgsz=640,
+            batch=BATCH,
+            cache=True,
+            device=DEVICE,
+            project=RESULTS_DIR,
+            name="sugarbeet_det_s",
+            workers=WORKERS,
+            
+            # Tarımsal veri çoğaltma (segmentation ile aynı ayarlar)
+            degrees=180.0,
+            flipud=0.5,
+            fliplr=0.5,
+            hsv_h=0.015,
+            hsv_s=0.7,
+            hsv_v=0.4,
+            cos_lr=True,
+        )
     
     print("\n" + "=" * 60)
     print("  Eğitim tamamlandı!")
