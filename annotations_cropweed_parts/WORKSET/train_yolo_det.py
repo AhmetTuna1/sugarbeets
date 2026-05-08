@@ -38,7 +38,7 @@ except ImportError:
     IN_COLAB = False
 
 if IN_COLAB:
-    DATASET_ROOT = "/content/DATASET_SPLIT"
+    DATASET_ROOT = "/content/dataset/DATASET_SPLIT"
     RESULTS_DIR = "/content/drive/MyDrive/SugarBeetsProject/yolo_results"
     DEVICE = 0
     WORKERS = 8
