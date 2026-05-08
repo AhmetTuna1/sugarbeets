@@ -38,7 +38,21 @@ except ImportError:
     IN_COLAB = False
 
 if IN_COLAB:
-    DATASET_ROOT = "/content/dataset/DATASET_SPLIT"
+    # Colab'da zip dosyasının nereye açıldığını otomatik bulmak için:
+    possible_paths = [
+        "/content/DATASET_SPLIT",
+        "/content/dataset/DATASET_SPLIT",
+        "/content/DATASET_SPLIT_zip/DATASET_SPLIT",
+        "/content/DATASET_SPLIT_zip",
+        "/content"
+    ]
+    DATASET_ROOT = "/content/DATASET_SPLIT" # Default
+    for p in possible_paths:
+        if os.path.exists(os.path.join(p, "train", "masks")):
+            DATASET_ROOT = p
+            break
+            
+    print(f"[*] DATASET_ROOT otomatik olarak şuna ayarlandı: {DATASET_ROOT}")
     RESULTS_DIR = "/content/drive/MyDrive/SugarBeetsProject/yolo_results"
     DEVICE = 0
     WORKERS = 8
