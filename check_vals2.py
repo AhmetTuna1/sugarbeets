@@ -1,17 +1,15 @@
-from PIL import Image
 import numpy as np
+from PIL import Image
 import os
 
 mask_dir = r"annotations_cropweed_parts\WORKSET\masks"
-
 files = [f for f in os.listdir(mask_dir) if f.lower().endswith(".png")]
 all_values = set()
 
-for f in files[:30]:
+for f in files[1000:1050]:
     path = os.path.join(mask_dir, f)
     arr = np.array(Image.open(path))
     vals = np.unique(arr)
-    print(f"{f}: {vals}")
     all_values.update(vals.tolist())
 
-print("\nAll unique values seen:", sorted(all_values))
+print("Unique values in next batch:", sorted(all_values))
