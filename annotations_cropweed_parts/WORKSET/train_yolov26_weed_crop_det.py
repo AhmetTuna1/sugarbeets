@@ -167,9 +167,9 @@ def train_multiclass_detection():
         model = YOLO(last_pt_path)
         results = model.train(resume=True)
     else:
-        print(f"\n[BİLGİ] YOLOv26s ile Sıfırdan yeni bir eğitim başlatılıyor...\n")
-        # --- BURASI YOLOV26s İÇİN ÖZELLEŞTİRİLDİ ---
-        model = YOLO("yolov26s.pt")
+        print(f"\n[BİLGİ] YOLO11s ile Sıfırdan yeni bir eğitim başlatılıyor...\n")
+        # YOLOv26 henüz icat edilmediği için en son teknoloji olan YOLO11 kullanıyoruz.
+        model = YOLO("yolo11s.pt")
         results = model.train(
             data=yaml_path,
             epochs=100,
