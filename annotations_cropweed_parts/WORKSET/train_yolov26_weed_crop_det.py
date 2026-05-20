@@ -126,8 +126,8 @@ def create_multiclass_yaml(dataset_root):
 
 def fix_dataset_paths(dataset_dir):
     """
-    Colab'da zip açılırken Windows (backslash \) yollarının düz dosya 
-    olarak çıkmasını (train\masks\resim.png) düzeltip klasörlere ayırır.
+    Colab'da zip açılırken Windows (backslash \\) yollarının düz dosya 
+    olarak çıkmasını (train\\masks\\resim.png) düzeltip klasörlere ayırır.
     """
     import shutil
     if not os.path.exists(dataset_dir): return
