@@ -128,11 +128,30 @@ def create_multiclass_yaml(dataset_root):
     return yaml_path
 
 
+def fix_dataset_paths(dataset_dir):
+    """
+    Colab'da zip açılırken Windows (backslash \) yollarının düz dosya 
+    olarak çıkmasını (train\masks\resim.png) düzeltip klasörlere ayırır.
+    """
+    import shutil
+    if not os.path.exists(dataset_dir): return
+    for filename in os.listdir(dataset_dir):
+        if "\\" in filename:
+            parts = filename.split("\\")
+            target_dir = os.path.join(dataset_dir, *parts[:-1])
+            os.makedirs(target_dir, exist_ok=True)
+            shutil.move(os.path.join(dataset_dir, filename), os.path.join(target_dir, parts[-1]))
+
 # ======================== ADIM 3: EĞİTİM ========================
 def train_multiclass_detection():
     print("=" * 60)
     print("  YOLOv8s MULTI-CLASS Object Detection (Weed & Crop)")
     print("=" * 60)
+    
+    # 0. Zip yol düzeltme (Eğer \ karakteriyle dosya çıktıysa düzeltir)
+    if IN_COLAB:
+        print("[BİLGİ] Veriseti klasör yapısı kontrol ediliyor...")
+        fix_dataset_paths(DATASET_ROOT)
     
     # 1. Label Dönüşümü
     print("\n[ADIM 1/3] Mask'lardan 2 Sınıflı (Weed & Crop) Bbox'lar üretiliyor...\n")
